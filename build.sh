@@ -6,7 +6,7 @@
 # Install build dependencies
 #
 
-sudo apt-get -y install build-essential cmake libgl1-mesa-dev ninja-build qt6-base-dev qt6-tools-dev-tools qt6-multimedia-dev qt6-wayland clang-15 clang++-15
+sudo apt-get -y install build-essential cmake libgl1-mesa-dev ninja-build qt6-base-dev qt6-tools-dev-tools qt6-multimedia-dev qt6-wayland clang-15 clang++-15 zsync
 
 #
 # Get Ladybird source
@@ -39,6 +39,8 @@ ls -lh Build/
 # Populate AppDir
 #
 
+# FIXME: If Ladybird had the equivalent of "make install", it would be so much nicer...
+
 mkdir -p Ladybird.AppDir/usr/bin Ladybird.AppDir/usr/share/applications Ladybird.AppDir/usr/share/icons/hicolor/256x256/apps Ladybird.AppDir/usr/lib
 cp Build/ladybird Ladybird.AppDir/usr/bin/
 strip Ladybird.AppDir/usr/bin/ladybird
@@ -58,13 +60,10 @@ StartupNotify=true
 EOF
 cp Ladybird.AppDir/usr/share/applications/ladybird.desktop Ladybird.AppDir/
 
-cp Build/Lagom/lib/* Ladybird.AppDir/usr/lib/
-
 #
 # Deploy all dependencies into AppDir
 #
 
-# export LD_LIBRARY_PATH=$(readlink -f Build/Lagom/lib/) # Copying in those manually above
 wget -c "https://github.com/probonopd/Ladybird.AppImage/releases/download/assets/appimagetool-786-x86_64.AppImage"
 # wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)
 chmod +x appimagetool-*.AppImage
