@@ -1,11 +1,10 @@
 #!/bin/sh
 
 # git clone only the path at https://github.com/SerenityOS/serenity/tree/master/Ladybird with depth 1
-git clone --depth 1 --filter=blob:none --no-checkout https://github.com/SerenityOS/serenity.git
+git clone --depth 1 --no-checkout https://github.com/SerenityOS/serenity.git serenity
 cd serenity
-git config core.sparseCheckout true
-echo "Ladybird" >> .git/info/sparse-checkout
-git sparse-checkout reapply
+git sparse-checkout init --cone
+git sparse-checkout set Ladybird
 
 cd Ladybird
 ls
