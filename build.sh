@@ -9,9 +9,9 @@ ls
 
 sudo apt-get -y install build-essential cmake libgl1-mesa-dev ninja-build qt6-base-dev qt6-tools-dev-tools qt6-multimedia-dev qt6-wayland clang-15 clang++-15
 
-# Export CC environment variable to force clang-15
-export CC=$(which clang-15)
-export CXX=$(which clang++-15)
+# Export CC environment variable to force clang-15 with ccache
+export CC="ccache clang-15"
+export CXX="ccache clang++-15"
 
 # Build in Build/
 mkdir -p Build/
