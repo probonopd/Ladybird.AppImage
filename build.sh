@@ -11,6 +11,10 @@ sudo apt-get -y install build-essential cmake libgl1-mesa-dev ninja-build qt6-ba
 
 # Ladybird needs gcc-12, so make it the default
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100
+gcc --version
+
+# Export CC environment variable to force gcc-12
+export CC=$(which gcc-12)
 
 # Build in Build/
 mkdir -p Build/
