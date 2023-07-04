@@ -16,6 +16,9 @@ gcc --version
 # Export CC environment variable to force gcc-12
 export CC=$(which gcc-12)
 
+# The above is still not enough, so uninstall gcc-11
+sudo apt-get -y remove gcc-11
+
 # Build in Build/
 mkdir -p Build/
 cmake -GNinja -S . -B Build/
