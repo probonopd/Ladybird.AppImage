@@ -39,7 +39,7 @@ ls -lh Build/
 # Populate AppDir
 #
 
-mkdir -p Ladybird.AppDir/usr/bin Ladybird.AppDir/usr/share/applications Ladybird.AppDir/usr/share/icons/hicolor/256x256/apps
+mkdir -p Ladybird.AppDir/usr/bin Ladybird.AppDir/usr/share/applications Ladybird.AppDir/usr/share/icons/hicolor/256x256/apps Ladybird.AppDir/usr/lib
 cp Build/ladybird Ladybird.AppDir/usr/bin/
 strip Ladybird.AppDir/usr/bin/ladybird
 wget -c -q https://ladybird.dev/ladybird.png && mv ladybird.png Ladybird.AppDir/usr/share/icons/hicolor/256x256/apps/
@@ -58,10 +58,13 @@ StartupNotify=true
 EOF
 cp Ladybird.AppDir/usr/share/applications/ladybird.desktop Ladybird.AppDir/
 
+cp Build/Lagom/lib/* Ladybird.AppDir/usr/lib/
+
 #
 # Deploy all dependencies into AppDir
 #
 
+# export LD_LIBRARY_PATH=$(readlink -f Build/Lagom/lib/) # Copying in those manually above
 wget -c "https://github.com/probonopd/Ladybird.AppImage/releases/download/assets/appimagetool-786-x86_64.AppImage"
 # wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)
 chmod +x appimagetool-*.AppImage
