@@ -64,8 +64,7 @@ cp Ladybird.AppDir/usr/share/applications/ladybird.desktop Ladybird.AppDir/
 # Deploy all dependencies into AppDir
 #
 
-wget -c "https://github.com/probonopd/Ladybird.AppImage/releases/download/assets/appimagetool-787-x86_64.AppImage"
-# wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)
+wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)
 chmod +x appimagetool-*.AppImage
 
 ./appimagetool-*.AppImage -s deploy Ladybird.AppDir/usr/share/applications/*.desktop # Bundle EVERYTHING
