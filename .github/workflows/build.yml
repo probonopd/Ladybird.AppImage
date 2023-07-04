@@ -16,6 +16,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Download ccache cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.ccache
+          key: ${{ runner.os }}-ccache-${{ hashFiles('**/build.sh') }}
+          restore-keys: ${{ runner.os }}-ccache-
+
+      - name: Install ccache
+        run: sudo apt-get install -y ccache
+
+      - name: Set up ccache for clang
+        run: echo 'export PATH="/usr/lib/ccache:$PATH"' >> $GITHUB_ENV
+
       - name: Run build script
         run: |
           sh -ex ./build.sh
+
+      - name: Upload ccache cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.ccache
+          key: ${{ runner.os }}-ccache-${{ hashFiles('**/build.sh') }}
