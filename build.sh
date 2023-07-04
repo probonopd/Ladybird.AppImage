@@ -18,7 +18,7 @@ mkdir -p Build/
 cmake -GNinja -S . -B Build/
 # optionally, add -DCMAKE_CXX_COMPILER=<suitable compiler> -DCMAKE_C_COMPILER=<matching c compiler>
 cmake --build Build/
-ninja -C Build/ run
 
 find Build/
-wget -c -q "https://github.com/probonopd/go-appimage/suites/14058685897/artifacts/785575955" --trust-server-names
+ldd Build/ladybird
+ls -lh Build/
