@@ -38,3 +38,14 @@ jobs:
         with:
           path: ~/.ccache
           key: ${{ runner.os }}-ccache-${{ hashFiles('**/build.sh') }}
+          
+      - name: Upload to GitHub Releases
+        if: github.event_name != 'pull_request' && github.ref_name == 'main'
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "continuous"
+          prerelease: false
+          title: "Continuous Build"
+          files: |
+            ./serenity/Ladybird-*-x86_64.AppImage
