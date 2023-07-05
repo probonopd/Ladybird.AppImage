@@ -73,3 +73,6 @@ chmod +x appimagetool-*.AppImage
 #
 
 VERSION=$(git rev-parse --short HEAD) ./appimagetool-*.AppImage ./Ladybird.AppDir
+
+# Where is it?
+readlink -f ./Ladybird*AppImage
