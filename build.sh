@@ -27,13 +27,12 @@ export CXX="ccache clang++-15"
 
 # Build in Build/
 mkdir -p Build/
-cmake -GNinja -S . -B Build/
-# optionally, add -DCMAKE_CXX_COMPILER=<suitable compiler> -DCMAKE_C_COMPILER=<matching c compiler>
-cmake --build Build/
 
-find Build/
-ldd Build/ladybird
-ls -lh Build/
+# Similar to https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=ladybird
+cmake -GNinja -S . -B Build/ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX='/usr' -Wno-dev
+ninja -C Build
+DESTDIR="./Ladybird.AppDir/" ninja -C Build install
+find ./Ladybird.AppDir/
 
 #
 # Populate AppDir
@@ -41,8 +40,7 @@ ls -lh Build/
 
 # FIXME: If Ladybird had the equivalent of "make install", it would be so much nicer...
 
-mkdir -p Ladybird.AppDir/usr/bin Ladybird.AppDir/usr/share/applications Ladybird.AppDir/usr/share/icons/hicolor/256x256/apps Ladybird.AppDir/usr/lib
-cp Build/ladybird Ladybird.AppDir/usr/bin/
+mkdir -p Ladybird.AppDir/usr/share/applications Ladybird.AppDir/usr/share/icons/hicolor/256x256/apps
 strip Ladybird.AppDir/usr/bin/ladybird
 wget -c -q https://ladybird.dev/ladybird.png && mv ladybird.png Ladybird.AppDir/usr/share/icons/hicolor/256x256/apps/
 
