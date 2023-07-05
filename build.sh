@@ -32,7 +32,10 @@ mkdir -p Build/
 cmake -GNinja -S . -B Build/ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX='/usr' -Wno-dev
 ninja -C Build
 DESTDIR="./Ladybird.AppDir/" ninja -C Build install
-find ./Ladybird.AppDir/
+
+find ./Build/Ladybird.AppDir/ || true
+find ./Ladybird.AppDir/ || true
+find ../../ -name "Ladybird.AppDir"
 
 #
 # Populate AppDir
