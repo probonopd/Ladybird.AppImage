@@ -52,4 +52,4 @@ jobs:
           prerelease: false
           title: "Continuous Build"
           files: |
-            ./serenity/Build/Ladybird-*-x86_64.AppImage*
+            ./serenity/Ladybird/Ladybird-*.AppImage*
