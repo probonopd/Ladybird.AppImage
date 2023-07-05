@@ -31,11 +31,9 @@ mkdir -p Build/
 # Similar to https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=ladybird
 cmake -GNinja -S . -B Build/ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX='/usr' -Wno-dev
 ninja -C Build
-DESTDIR="./Ladybird.AppDir/" ninja -C Build install
+DESTDIR="../Ladybird.AppDir/" ninja -C Build install # .. because it is relative to Build
 
-find ./Build/Ladybird.AppDir/ || true
-find ./Ladybird.AppDir/ || true
-find ../../ -name "Ladybird.AppDir"
+find ./Ladybird.AppDir/
 
 #
 # Populate AppDir
