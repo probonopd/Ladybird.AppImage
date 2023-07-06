@@ -6,6 +6,7 @@
 # Install build dependencies
 #
 
+sudo apt-get -y update
 sudo apt-get -y install build-essential cmake libgl1-mesa-dev ninja-build qt6-base-dev qt6-tools-dev-tools qt6-multimedia-dev qt6-wayland clang-15 clang++-15 zsync
 
 #
