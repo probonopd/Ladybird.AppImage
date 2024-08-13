@@ -7,24 +7,56 @@
 #
 
 sudo apt-get -y update
-sudo apt-get -y install build-essential cmake libgl1-mesa-dev ninja-build qt6-base-dev qt6-tools-dev-tools qt6-multimedia-dev qt6-wayland clang-15 clang++-15 zsync
+sudo apt-get -y install autoconf autoconf-archive automake build-essential ccache cmake curl fonts-liberation2 git libavcodec-dev libgl1-mesa-dev nasm ninja-build pkg-config qt6-base-dev qt6-tools-dev-tools qt6-wayland tar unzip zip
+
+# Add Kitware GPG signing key
+wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+
+# Use the key to authorize an entry for apt.kitware.com in apt sources list
+echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/kitware.list
+
+# Update apt package list and install cmake
+sudo apt-get -y update
+sudo apt-get -y install cmake
+
+# Add LLVM GPG signing key
+sudo wget -O /usr/share/keyrings/llvm-snapshot.gpg.key https://apt.llvm.org/llvm-snapshot.gpg.key
+
+# Use the key to authorize an entry for apt.llvm.org in apt sources list
+echo "deb [signed-by=/usr/share/keyrings/llvm-snapshot.gpg.key] https://apt.llvm.org/$(lsb_release -sc)/ llvm-toolchain-$(lsb_release -sc)-18 main" | sudo tee -a /etc/apt/sources.list.d/llvm.list
+
+# Update apt package list and install clang and associated packages
+sudo apt-get -y update
+sudo apt-get -y install clang-18 clangd-18 clang-format-18 clang-tidy-18 lld-18
+
+sudo apt install qt6-multimedia-dev
+
+# Install undocumented dependency; https://github.com/LadybirdBrowser/ladybird/issues/1064
+git clone https://github.com/simdutf/simdutf.git
+cd simdutf
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+cd ../..
 
 #
 # Get Ladybird source
 #
 
-git clone --depth 1 https://github.com/SerenityOS/serenity # TODO: Only the path at /Ladybird
+git clone --depth 1 https://github.com/LadybirdBrowser/ladybird
 
 #
 # Build Ladybird
 #
 
-cd serenity/Ladybird
+cd ladybird
 ls
 
 # Export CC environment variable to force clang-15 with ccache
-export CC="ccache clang-15"
-export CXX="ccache clang++-15"
+export CC="ccache clang-18"
+export CXX="ccache clang++-18"
 
 # Build in Build/
 mkdir -p Build/
