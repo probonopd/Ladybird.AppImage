@@ -31,6 +31,16 @@ sudo apt-get -y install clang-18 clangd-18 clang-format-18 clang-tidy-18 lld-18
 
 sudo apt install qt6-multimedia-dev
 
+# Install undocumented dependency; https://github.com/LadybirdBrowser/ladybird/issues/1064
+git clone https://github.com/simdutf/simdutf.git
+cd simdutf
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+cd ../..
+
 #
 # Get Ladybird source
 #
